@@ -89,11 +89,12 @@ def compute_group_normalized_rewards_grpo(
     advantage_normalizer: Literal['std','none','mean'] = 'std',
 ):
     """求advantage"""
-    n = len(raw_rewards) // group_size
+    G = group_size
+    n = len(raw_rewards) // G
     mu = []
     norm = []
     for i in range(n):
-        reward = raw_rewards[(i*n):(i*n+group_size)]
+        reward = raw_rewards[(i*G):((i+1)* G)]
         if baseline == 'mean':
             mu += [reward.mean().item()] * group_size
         else:

@@ -1,0 +1,76 @@
+_wandb:
+    value:
+        cli_version: 0.26.1
+        e:
+            zlfuk8hbs8jliknzcrr2m218awyyhgum:
+                codePath: cs336_alignment/training_step.py
+                codePathLocal: cs336_alignment/training_step.py
+                cpu_count: 64
+                cpu_count_logical: 128
+                cudaVersion: "13.0"
+                disk:
+                    /:
+                        total: "32212254720"
+                        used: "22941544448"
+                email: 992657945@qq.com
+                executable: /root/autodl-tmp/projects/cs336-assignment5/.venv/bin/python3
+                git:
+                    commit: 25e8342880c6be507b94083f0447992c0d5ad5e1
+                    remote: git@github.com:lqy77777/cs336-assignment5.git
+                gpu: NVIDIA GeForce RTX 5090
+                gpu_count: 2
+                gpu_nvidia:
+                    - architecture: Blackwell
+                      cudaCores: 21760
+                      memoryTotal: "34190917632"
+                      name: NVIDIA GeForce RTX 5090
+                      uuid: GPU-f3623e6f-bcc0-4e25-2d49-b2d3fa26a446
+                    - architecture: Blackwell
+                      cudaCores: 21760
+                      memoryTotal: "34190917632"
+                      name: NVIDIA GeForce RTX 5090
+                      uuid: GPU-678d2499-2474-32b7-073d-8d8acbce0b2b
+                host: autodl-container-cd5b4483de-2c71bd22
+                memory:
+                    total: "810181328896"
+                os: Linux-5.15.0-119-generic-x86_64-with-glibc2.35
+                program: /root/autodl-tmp/projects/cs336-assignment5/cs336_alignment/training_step.py
+                python: CPython 3.12.3
+                root: /root/autodl-tmp/projects/cs336-assignment5
+                startedAt: "2026-10-28T06:09:47.039624Z"
+                writerId: zlfuk8hbs8jliknzcrr2m218awyyhgum
+        m: []
+        python_version: 3.12.3
+        t:
+            "1":
+                - 1
+                - 5
+                - 11
+                - 41
+                - 49
+                - 53
+                - 71
+            "2":
+                - 1
+                - 5
+                - 11
+                - 41
+                - 49
+                - 53
+                - 71
+            "3":
+                - 2
+                - 13
+                - 16
+                - 61
+            "4": 3.12.3
+            "5": 0.26.1
+            "6": 5.7.0
+            "12": 0.26.1
+            "13": linux-x86_64
+n_eval:
+    value: 1024
+rollout_steps:
+    value: 50
+seed:
+    value: 0

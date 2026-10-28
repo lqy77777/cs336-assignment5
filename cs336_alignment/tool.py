@@ -58,8 +58,16 @@ def get_response_log_probs(
     # squeeze(-1)后        :BG * (T-1)
     result['log_probs'] = log_probs
     if return_token_entropy:
-        probs = torch.softmax(logits, dim = -1)
-        token_entropy = -(probs * log_probs_all).sum(dim = -1)
+        # 熵只用于日志，分块计算，避免额外保留整个词表的概率张量和计算图。
+        with torch.no_grad():
+            flat_logits = logits.detach().reshape(-1, logits.shape[-1])
+            token_entropy = torch.empty(logits.shape[:-1], device=logits.device, dtype=torch.float32)
+            flat_entropy = token_entropy.reshape(-1)
+            for start in range(0, flat_logits.shape[0], 64):
+                chunk_log_probs = torch.log_softmax(flat_logits[start:start+64].float(), dim=-1)
+                probs = chunk_log_probs.exp()
+                probs.mul_(chunk_log_probs)
+                flat_entropy[start:start+64] = -probs.sum(dim=-1)
         result['token_entropy'] = token_entropy
     return result
 

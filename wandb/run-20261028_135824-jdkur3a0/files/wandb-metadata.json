@@ -1,0 +1,47 @@
+{
+  "os":  "Linux-5.15.0-119-generic-x86_64-with-glibc2.35",
+  "python":  "CPython 3.12.3",
+  "startedAt":  "2026-10-28T05:58:24.256219Z",
+  "program":  "/root/autodl-tmp/projects/cs336-assignment5/cs336_alignment/training_step.py",
+  "codePath":  "cs336_alignment/training_step.py",
+  "codePathLocal":  "cs336_alignment/training_step.py",
+  "git":  {
+    "remote":  "git@github.com:lqy77777/cs336-assignment5.git",
+    "commit":  "25e8342880c6be507b94083f0447992c0d5ad5e1"
+  },
+  "email":  "992657945@qq.com",
+  "root":  "/root/autodl-tmp/projects/cs336-assignment5",
+  "host":  "autodl-container-cd5b4483de-2c71bd22",
+  "executable":  "/root/autodl-tmp/projects/cs336-assignment5/.venv/bin/python3",
+  "cpu_count":  64,
+  "cpu_count_logical":  128,
+  "gpu":  "NVIDIA GeForce RTX 5090",
+  "gpu_count":  2,
+  "disk":  {
+    "/":  {
+      "total":  "32212254720",
+      "used":  "22912872448"
+    }
+  },
+  "memory":  {
+    "total":  "810181328896"
+  },
+  "gpu_nvidia":  [
+    {
+      "name":  "NVIDIA GeForce RTX 5090",
+      "memoryTotal":  "34190917632",
+      "cudaCores":  21760,
+      "architecture":  "Blackwell",
+      "uuid":  "GPU-f3623e6f-bcc0-4e25-2d49-b2d3fa26a446"
+    },
+    {
+      "name":  "NVIDIA GeForce RTX 5090",
+      "memoryTotal":  "34190917632",
+      "cudaCores":  21760,
+      "architecture":  "Blackwell",
+      "uuid":  "GPU-678d2499-2474-32b7-073d-8d8acbce0b2b"
+    }
+  ],
+  "cudaVersion":  "13.0",
+  "writerId":  "ktgufw7ojm3dne6zsh0vo9tvl8szrhmj"
+}

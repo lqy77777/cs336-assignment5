@@ -9,8 +9,9 @@ from torch.utils.data import Dataset
 from transformers import PreTrainedTokenizerBase
 
 from cs336_alignment.tool import tokenize_prompt_and_output,get_response_log_probs,compute_rollout_rewards
+from cs336_alignment.tool import aggregate_loss_across_microbatch_sequence
 from cs336_alignment.tool import compute_group_normalized_rewards_grpo,compute_policy_gradient_loss_on_policy
-
+from cs336_alignment.training_step import grpo_train_step
 
 def run_tokenize_prompt_and_output(
     prompt_strs: list[str],
@@ -235,7 +236,8 @@ def run_aggregate_loss_across_microbatch(
             A scalar containing the average loss. Make sure you can later call
             backward on this loss.
     """
-    raise NotImplementedError
+    return aggregate_loss_across_microbatch_sequence(per_token_policy_gradient_loss,
+                mask, loss_normalization, normalization_constant)
 
 
 def run_grpo_train_step(
@@ -324,7 +326,10 @@ def run_grpo_train_step(
                 Dict with metadata from the underlying loss call, gradient norm
                 before clipping, and any other statistics you might want to log.
     """
-    raise NotImplementedError
+    return grpo_train_step(model,tokenizer,optimizer,gradient_accumulation_steps,max_grad_norm,reward_fn,
+                           repeated_prompts,rollout_responses,repeated_ground_truths,group_size,baseline,
+                           advantage_eps,advantage_normalizer, importance_reweighting_method,old_log_probs,
+                           cliprange,loss_normalization,normalization_constant)
 
 
 """

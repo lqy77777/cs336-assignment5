@@ -1,5 +1,6 @@
 import torch
-from transformers import PreTrainedTokenizerBase,PreTrainedModel
+from transformers import PreTrainedTokenizerBase,PreTrainedModel,modeling_outputs
+from transformers.modeling_outputs import CausalLMOutputWithPast
 from typing import Callable,Literal
 from einops import einsum, rearrange
 
@@ -50,7 +51,7 @@ def get_response_log_probs(
     result = {}
     logits = model(input_ids).logits
     log_probs_all = torch.log_softmax(logits, dim = -1)   #维度是b*s*v
-    log_probs = log_probs_all.gather(dim=-1,index=labels.unsqueeze(-1),).squeeze(-1)
+    log_probs = log_probs_all.gather(dim=-1,index=labels.unsqueeze(-1)).squeeze(-1)
     # log_probs_all        :BG * (T-1) * V
     # labels:               BG * (T-1)
     # labels.unsqueeze(-1) :BG * (T-1) * 1
@@ -60,21 +61,19 @@ def get_response_log_probs(
     if return_token_entropy:
         # 熵只用于日志，分块计算，避免额外保留整个词表的概率张量和计算图。
         with torch.no_grad():
-            flat_logits = logits.detach().reshape(-1, logits.shape[-1])
-            token_entropy = torch.empty(logits.shape[:-1], device=logits.device, dtype=torch.float32)
-            flat_entropy = token_entropy.reshape(-1)
-            for start in range(0, flat_logits.shape[0], 64):
-                chunk_log_probs = torch.log_softmax(flat_logits[start:start+64].float(), dim=-1)
-                probs = chunk_log_probs.exp()
-                probs.mul_(chunk_log_probs)
-                flat_entropy[start:start+64] = -probs.sum(dim=-1)
+            probs = log_probs_all.exp()
+            token_entropy = - (probs * log_probs_all).sum(dim= -1)
+            # logits        : BG * (T-1) * V
+            # probs         : BG * (T-1) * V
+            # log_probs_all : BG * (T-1) * V
+            # token_entropy : BG * (T-1)
         result['token_entropy'] = token_entropy
     return result
 
 def compute_rollout_rewards(
     reward_fn: Callable[[str, str], dict[str, float]],
-    rollout_response: list[str],
-    repeated_ground_truths:list[str],
+    rollout_response: list[str],        #长度BG
+    repeated_ground_truths:list[str],   #长度BG
 ) -> tuple[torch.Tensor, dict[str, float]]:
     """模型已经生成了一批回答，现在要给每条回答打分，把这些分数整理成后续训练能使用的形式，同时记录这一批回答的整体表现。"""
     rewards = []
@@ -88,9 +87,10 @@ def compute_rollout_rewards(
     metadata = {'mean_reward': rewards.mean(),
                 'mean_format_reward': format_rewards.mean()}
     return rewards, metadata
+    #rewards: 长度BG
 
 def compute_group_normalized_rewards_grpo(
-    raw_rewards: torch.Tensor,
+    raw_rewards: torch.Tensor,   #长度BG
     group_size: int,
     baseline: Literal['mean','none'] = 'mean',
     advantage_eps: float=1e-6,
@@ -98,10 +98,10 @@ def compute_group_normalized_rewards_grpo(
 ):
     """求advantage"""
     G = group_size
-    n = len(raw_rewards) // G
+    B = len(raw_rewards) // G
     mu = []
     norm = []
-    for i in range(n):
+    for i in range(B):
         reward = raw_rewards[(i*G):((i+1)* G)]
         if baseline == 'mean':
             mu += [reward.mean().item()] * group_size
@@ -118,8 +118,8 @@ def compute_group_normalized_rewards_grpo(
         "max_reward": raw_rewards.max().item(),
         "min_reward": raw_rewards.min().item(),
     }
-    rewards = (raw_rewards - mu) / norm
-    return rewards, metadata
+    advantages = (raw_rewards - mu) / norm
+    return advantages, metadata
 
 def compute_policy_gradient_loss_on_policy(
     raw_rewards_or_advantages: torch.Tensor,   # N或者 N * 1

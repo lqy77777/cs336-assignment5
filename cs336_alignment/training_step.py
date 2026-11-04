@@ -43,22 +43,22 @@ def grpo_train_step(
     loss_normalization: Literal['sequence','constant'] = 'sequence',
     normalization_constant: int | None = None
 ) -> tuple[torch.Tensor, dict[str, torch.Tensor | float]]:
-    device = next(model.parameters()).device
+    device = next(model.parameters()).device       #确定设备
     batch_loss = torch.zeros((), device=device)
     metadata = {}
-    N = len(repeated_prompts)     # N = BG
+    N = len(repeated_prompts)     # N = B * G
     G = group_size
-    B = N // G
+
     input_dict = tokenize_prompt_and_output(repeated_prompts, rollout_responses, tokenizer)
     input_ids = input_dict['input_ids'].to(device)         # N * S
     labels = input_dict['labels'].to(device)               # N * S
     response_mask = input_dict['response_mask'].to(device) # N * S
+
     raw_rewards, reward_metadata = compute_rollout_rewards(reward_fn, rollout_responses, repeated_ground_truths)  #长度为N
-    metadata['mean_reward'] = float(reward_metadata['mean_reward'])
+    metadata['mean_reward'] = float(reward_metadata['mean_reward'])  #将Tensor标量转化为浮点数
     metadata['mean_format_reward'] = float(reward_metadata['mean_format_reward'])
     normed_advantages = compute_group_normalized_rewards_grpo(raw_rewards,G,baseline,advantage_eps
-                                                              ,advantage_normalizer)[0]  #长度为N
-    normed_advantages = normed_advantages.to(device)
+                                                              ,advantage_normalizer)[0].to(device)  #长度为N
     m = N //gradient_accumulation_steps   #microbatch_size
     entropy_sum = torch.zeros((), device=device)
     
@@ -73,26 +73,27 @@ def grpo_train_step(
                                                 old_log_probs,cliprange,response_mask[i:i+m])[0]  # m * (T-1)
         loss = aggregate_loss_across_microbatch_sequence(per_loss, response_mask[i:i+m], loss_normalization,
                                                          normalization_constant)
-        batch_loss += (loss/gradient_accumulation_steps).detach()
+        batch_loss += (loss/gradient_accumulation_steps).detach()     #记录用的，不参与反向传播
         (loss/gradient_accumulation_steps).backward()
-    metadata['token_entropy'] = (entropy_sum / response_mask.sum()).item()
+    metadata['mean_entropy'] = (entropy_sum / response_mask.sum()).item() #所有有效回答token的平均熵
     #梯度裁剪
     clip_limit = max_grad_norm if max_grad_norm is not None else float('inf')
     grad_norm = clip_grad_norm_(model.parameters(), max_norm = clip_limit)
     metadata['grad_norm'] = grad_norm
+    metadata['batch_loss'] = batch_loss
     optimizer.step()
     optimizer.zero_grad()
     return batch_loss, metadata
 
 def evaluate_policy(
-    model,
-    server,
-    tokenizer,
-    validation_data: list[dict[str,str]],
-    prompt_template,
-    sampling_params,
-    reward_fn,
-    n_eval=1024,
+    model: PreTrainedModel,
+    server: VLLMServer,
+    tokenizer: PreTrainedTokenizerBase,
+    validation_data: list[dict[str, str]],
+    prompt_template: str,                 #提问模板
+    sampling_params: dict[str, float | int | str | bool],
+    reward_fn: Callable[[str, str], dict[str, float]],
+    n_eval: int = 1024,
 ):
     # 每次验证使用相同的数据，方便比较训练前后的变化。
     validations = validation_data[:n_eval]
@@ -100,7 +101,7 @@ def evaluate_policy(
     prompts = [prompt_template.format(question=validation["question"]) for validation in validations]
     ground_truths = [validation["ground_truth"] for validation in validations]
 
-    # 验证当前训练模型，而不是 vLLM 中残留的旧权重。
+    # 同步当前模型权重
     server.sync_policy_weights(model)
     #验证的推理参数需要和训练的推理参数不同, n=1每个问题生成一个回答
     eval_params = dict(sampling_params)
@@ -129,7 +130,7 @@ def evaluate_policy(
         ))
         for completion in completions
     ]
-
+    #整理指标
     metrics = {
         "validation_reward": float(reward_metadata["mean_reward"]),
         "validation_format_reward": float(
@@ -159,14 +160,23 @@ def main():
     B = 32  #question_batch_size
     G = 8   #responses_per_question
     N = B * G  #overall_batch_size
-    gradient_accumulation_steps = 64   #一层更新分成几个microbatch
+    gradient_accumulation_steps = 32   #一层更新分成几个microbatch
     m = N // gradient_accumulation_steps   #每个microbatch的大小
     max_grad_norm = 1.0
-    rollout_steps = 50
+    rollout_steps = 200
     n_eval = 1024   #验证集大小
+    n_train = B * rollout_steps
 
     seed = 0
     rng = random.Random(seed)   #由种子初始化的随机数生成器
+    sampling_params = {
+            "temperature": 1.0, 
+            "max_tokens": 512, 
+            "n": G,     #每个问题生成G个回答
+            "seed":seed,
+            "stop": '</answer>',
+            "include_stop_str_in_output": True
+        }
 
     training_file_path = Path("data/gsm8k/train.jsonl")
     validation_file_path = Path("data/gsm8k/test.jsonl")
@@ -185,15 +195,9 @@ def main():
         betas=betas,
         weight_decay=weight_decay,
     )
-    server = VLLMServer(model_id, gpu = server_device, gpu_memory_utilization=0.75)
-    sampling_params = {
-        "temperature": 1.0, 
-        "max_tokens": 512, 
-        "n": G,     #每个问题生成G个回答
-        "seed":seed,
-        "stop": '</answer>',
-        "include_stop_str_in_output": True
-    }
+
+    server = VLLMServer(model_id, gpu = server_device)
+
     #从training file和test file中读取数据
     training_data = []     #list[str]
     with training_file_path.open("r", encoding = 'utf-8') as f:
@@ -221,7 +225,7 @@ def main():
             "seed": seed,
             "n_eval": n_eval,
             "rollout_steps": rollout_steps,
-            "microbatch_size": 4,
+            "microbatch_size": m,
         },
     ) as run:
         # step：已经完成的训练更新次数，用作曲线横轴。
@@ -254,60 +258,60 @@ def main():
             )
 
             print(f"step={step}, validation={metrics}", flush=True)
-
-        model.train()
-        server.start()
-        server.init_weight_sync(policy_device=model_device)
-        # 训练前验证，得到初始表现。
-        log_validation(step=0)
-        for k in range(rollout_steps):
-            print(f"正在进行第{k}次step")
-            server.sync_policy_weights(model)    #同步权重
-            #1.采样 B 个questions
-            batch = rng.sample(training_data, B)
-            #2.每个question采样 G 个responses，生成3个输入list[str]
-            repeated_prompts = []
-            rollout_responses = []
-            repeated_ground_truths = []
-            for dictionary in batch:
-                question = dictionary['question']
-                prompt = zero_shot.format(question = question)
-                ground_truth = dictionary['ground_truth']
-                repeated_prompts += [prompt] * G
-                repeated_ground_truths += [ground_truth] * G
-                completions = server.generate_completions([prompt],sampling_params)
-                for response in completions:
-                    rollout_responses.append(response.text)
-            batch_loss, metadata = grpo_train_step(
-                model,
-                tokenizer,
-                optimizer,
-                gradient_accumulation_steps,
-                max_grad_norm,
-                r1_zero_reward_fn,
-                repeated_prompts,
-                rollout_responses,
-                repeated_ground_truths,
-                G,
-                advantage_eps= 1e-6
-            )    
-            # 采样问题 → 生成回答 → 调用 grpo_train_step()
-            step = k + 1
-            run.log(
-                {
-                    "train/loss": batch_loss.item(),
-                    "train/grad_norm": metadata['grad_norm'].item(),
-                    "train/token_entropy": metadata['token_entropy'],
-                    "train/reward": metadata['mean_reward'],
-                    "train/format_reward": metadata['mean_format_reward'],
-                },
-                step=step,
-            )
-            # 每 10 次更新验证一次，最后一次更新后也验证。
-            if step % 10 == 0 or step == rollout_steps:
-                log_validation(step)
-
-    server.stop()
+        try:
+            model.train()
+            server.start()
+            server.init_weight_sync(policy_device=model_device)
+            # 训练前验证，得到初始表现。
+            log_validation(step=0)
+            for k in range(rollout_steps):
+                print(f"正在进行第{k+1}次step")
+                server.sync_policy_weights(model)    #同步权重
+                #1.采样 B 个questions
+                batch = rng.sample(training_data, B)
+                #2.每个question采样 G 个responses，生成3个输入list[str]
+                repeated_prompts = []
+                rollout_responses = []
+                repeated_ground_truths = []
+                for dictionary in batch:
+                    question = dictionary['question']
+                    prompt = zero_shot.format(question = question)
+                    ground_truth = dictionary['ground_truth']
+                    repeated_prompts += [prompt] * G
+                    repeated_ground_truths += [ground_truth] * G
+                    completions = server.generate_completions([prompt],sampling_params)
+                    for response in completions:
+                        rollout_responses.append(response.text)
+                batch_loss, metadata = grpo_train_step(
+                    model,
+                    tokenizer,
+                    optimizer,
+                    gradient_accumulation_steps,
+                    max_grad_norm,
+                    r1_zero_reward_fn,
+                    repeated_prompts,
+                    rollout_responses,
+                    repeated_ground_truths,
+                    G,
+                    advantage_eps= 1e-6
+                )    
+                # 采样问题 → 生成回答 → 调用 grpo_train_step()
+                step = k + 1
+                run.log(
+                    {
+                        "train/loss": batch_loss.item(),
+                        "train/grad_norm": metadata['grad_norm'].item(),
+                        "train/token_entropy": metadata['token_entropy'],
+                        "train/reward": metadata['mean_reward'],
+                        "train/format_reward": metadata['mean_format_reward'],
+                    },
+                    step=step,
+                )
+                # 每 10 次更新验证一次，最后一次更新后也验证。
+                if step % 10 == 0 or step == rollout_steps:
+                    log_validation(step)
+        finally:
+            server.stop()
     return
 if __name__ == '__main__':
     main()

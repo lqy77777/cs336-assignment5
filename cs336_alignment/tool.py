@@ -110,8 +110,10 @@ def compute_group_normalized_rewards_grpo(
             mu += [0] * group_size
         if advantage_normalizer == 'std':
             norm += [reward.std().item() + advantage_eps] * group_size
-        else:
+        elif advantage_normalizer == 'none':
             norm += [1] * group_size
+        else:
+            norm += [reward.mean().item() + advantage_eps] * group_size
     mu = torch.tensor(mu)
     norm = torch.tensor(norm)
     metadata = {

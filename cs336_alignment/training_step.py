@@ -5,14 +5,13 @@ import random
 import wandb
 
 import torch
-from torch import Tensor
 from torch.nn.utils import clip_grad_norm_
 from torch.optim import Optimizer
 from transformers import PreTrainedModel, PreTrainedTokenizerBase
 
 from cs336_alignment.checkpoint import get_model_and_tokenizer
 from cs336_alignment.vllm_utils import VLLMServer
-from cs336_alignment.drgrpo_grader import question_only_reward_fn, r1_zero_reward_fn
+from cs336_alignment.drgrpo_grader import r1_zero_reward_fn
 
 from cs336_alignment.tool import (
     aggregate_loss_across_microbatch_sequence,
@@ -62,21 +61,49 @@ def grpo_train_step(
                                                               ,advantage_normalizer)[0].to(device)  #长度为N
     m = N //gradient_accumulation_steps   #microbatch_size
     entropy_sum = torch.zeros((), device=device)
+    #由于改进，需要计算有效token数
+    entropy_token_count =torch.zeros((),device = device)
     
     for i in range(0,N, m):
+        micro_advantages = normed_advantages[i:i+m]
+        original_size = micro_advantages.numel()
+        keep = micro_advantages != 0
+        # 当前 microbatch 没有有效贡献，省掉模型计算
+        if not keep.any():
+            continue
+        micro_input_ids = input_ids[i:i+m][keep]
+        micro_labels = labels[i:i+m][keep]
+        micro_mask = response_mask[i:i+m][keep]
+        micro_advantages = micro_advantages[keep]
         response_outputs = get_response_log_probs(
-            model, input_ids[i:i+m], labels[i:i+m], return_token_entropy=True,
+            model, micro_input_ids, micro_labels, return_token_entropy=True,
         )
         log_probs = response_outputs['log_probs']   # m * S
         # 按整轮回答 token 数加权，排除 prompt 和 padding。
-        entropy_sum += (response_outputs['token_entropy'] * response_mask[i:i+m]).sum()
-        per_loss = compute_policy_gradient_loss_on_policy(normed_advantages[i:i+m],log_probs,importance_reweighting_method,
-                                                old_log_probs,cliprange,response_mask[i:i+m])[0]  # m * (T-1)
-        loss = aggregate_loss_across_microbatch_sequence(per_loss, response_mask[i:i+m], loss_normalization,
+        entropy_sum += (response_outputs['token_entropy'] * micro_mask).sum()
+        entropy_token_count += micro_mask.sum()
+        per_loss = compute_policy_gradient_loss_on_policy(micro_advantages,log_probs,importance_reweighting_method,
+                                                old_log_probs,cliprange,response_mask=micro_mask)[0]  # m * (T-1)
+        loss = aggregate_loss_across_microbatch_sequence(per_loss, micro_mask, loss_normalization,
                                                          normalization_constant)
-        batch_loss += (loss/gradient_accumulation_steps).detach()     #记录用的，不参与反向传播
-        (loss/gradient_accumulation_steps).backward()
-    metadata['mean_entropy'] = (entropy_sum / response_mask.sum()).item() #所有有效回答token的平均熵
+        #接下来这个if-else非常重要
+        if loss_normalization == 'sequence':
+            loss = loss * (micro_advantages.numel() / original_size)
+            loss = loss / gradient_accumulation_steps
+        batch_loss += loss.detach()   #记录用的，不参与反向传播
+        loss.backward()
+     #所有有效回答token的平均熵
+    metadata['mean_entropy'] = (entropy_sum / entropy_token_count).item() if entropy_token_count.item() > 0 else 0.0
+    #防止所有normed_advantaged都等于0的特殊情况
+    if not (normed_advantages != 0).any():
+        for parameter in model.parameters():
+            if not parameter.requires_grad:
+                continue
+
+            if parameter.grad is None:
+                parameter.grad = torch.zeros_like(parameter)
+            else:
+                parameter.grad.zero_()
     #梯度裁剪
     clip_limit = max_grad_norm if max_grad_norm is not None else float('inf')
     grad_norm = clip_grad_norm_(model.parameters(), max_norm = clip_limit)

@@ -85,7 +85,8 @@ def compute_rollout_rewards(
     rewards = torch.tensor(rewards)
     format_rewards = torch.tensor(format_rewards)
     metadata = {'mean_reward': rewards.mean(),
-                'mean_format_reward': format_rewards.mean()}
+                'mean_format_reward': format_rewards.mean(),
+                'std_reward':rewards.std()}
     return rewards, metadata
     #rewards: 长度BG
 
@@ -106,11 +107,11 @@ def compute_group_normalized_rewards_grpo(
         if baseline == 'mean':
             mu += [reward.mean().item()] * group_size
         else:
-            pass
+            mu += [0] * group_size
         if advantage_normalizer == 'std':
             norm += [reward.std().item() + advantage_eps] * group_size
         else:
-            pass
+            norm += [1] * group_size
     mu = torch.tensor(mu)
     norm = torch.tensor(norm)
     metadata = {
@@ -118,6 +119,7 @@ def compute_group_normalized_rewards_grpo(
         "max_reward": raw_rewards.max().item(),
         "min_reward": raw_rewards.min().item(),
     }
+
     advantages = (raw_rewards - mu) / norm
     return advantages, metadata
 
@@ -144,6 +146,7 @@ def aggregate_loss_across_microbatch_sequence(
 ) -> torch.Tensor:
     """接收上一题算出的逐 token loss，排除题目和 padding 位置，按规则平均，最终得到一个可以调用 backward() 的标量 loss。"""
     # 排除 prompt 和 padding 位置
+    N,S = per_token_policy_gradient_loss.shape
     masked_loss = per_token_policy_gradient_loss * mask   # N * (T-1)
 
     # 每条回答的有效 token loss 总和，形状 (batch_size,)
@@ -152,8 +155,9 @@ def aggregate_loss_across_microbatch_sequence(
     # 每条回答的有效 token 数量，形状 (batch_size,)
     token_count = mask.sum(dim=-1)   #即为len              #N
 
-    # 每条回答内部取平均
-    sequence_loss = loss_sum / token_count                #N
-
-    # 对本批所有回答取平均，返回标量 Tensor
-    return sequence_loss.mean()
+    if loss_normalization == 'sequence':
+        # 每条回答内部取平均
+        sequence_loss = loss_sum / token_count                #N
+        return sequence_loss.mean()
+    else:
+        return loss_sum.sum() / normalization_constant

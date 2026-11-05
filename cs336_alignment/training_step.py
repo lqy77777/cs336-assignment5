@@ -57,6 +57,7 @@ def grpo_train_step(
     raw_rewards, reward_metadata = compute_rollout_rewards(reward_fn, rollout_responses, repeated_ground_truths)  #长度为N
     metadata['mean_reward'] = float(reward_metadata['mean_reward'])  #将Tensor标量转化为浮点数
     metadata['mean_format_reward'] = float(reward_metadata['mean_format_reward'])
+    metadata['std_reward'] = float(reward_metadata['std_reward'])
     normed_advantages = compute_group_normalized_rewards_grpo(raw_rewards,G,baseline,advantage_eps
                                                               ,advantage_normalizer)[0].to(device)  #长度为N
     m = N //gradient_accumulation_steps   #microbatch_size
@@ -95,6 +96,8 @@ def evaluate_policy(
     reward_fn: Callable[[str, str], dict[str, float]],
     n_eval: int = 1024,
 ):
+    """用来评估“当前模型答题表现如何”：让模型回答固定的验证集中的问题，给回答打分，
+    统计指标，并保存几条回答供你查看。它不会对训练模型执行梯度更新。"""
     # 每次验证使用相同的数据，方便比较训练前后的变化。
     validations = validation_data[:n_eval]
 
@@ -137,6 +140,7 @@ def evaluate_policy(
             reward_metadata["mean_format_reward"]
         ),
         "validation_response_length": sum(lengths) / len(lengths),
+        'validation_std_reward': float(reward_metadata['std_reward'])
     }
 
     # 保存固定的几条回答，便于比较训练前后。
@@ -216,7 +220,7 @@ def main():
             ground_truth = answer.split('####', 1)[1].strip()
             validation_data.append({'question':question,'ground_truth':ground_truth})
 
-
+    final_reward = 0
     # 以下放在 main() 中，模型、数据、优化器等初始化完成之后。
     with wandb.init(
         project="cs336-grpo",
@@ -258,6 +262,7 @@ def main():
             )
 
             print(f"step={step}, validation={metrics}", flush=True)
+            return metrics['validation_reward']
         try:
             model.train()
             server.start()
@@ -297,19 +302,23 @@ def main():
                 )    
                 # 采样问题 → 生成回答 → 调用 grpo_train_step()
                 step = k + 1
-                run.log(
-                    {
-                        "train/loss": batch_loss.item(),
-                        "train/grad_norm": metadata['grad_norm'].item(),
-                        "train/token_entropy": metadata['token_entropy'],
-                        "train/reward": metadata['mean_reward'],
-                        "train/format_reward": metadata['mean_format_reward'],
-                    },
-                    step=step,
-                )
+                if step % 40 == 0:
+                    run.log(
+                        {
+                            "train/loss": batch_loss.item(),
+                            "train/grad_norm": metadata['grad_norm'].item(),
+                            "train/mean_entropy": metadata['mean_entropy'],
+                            "train/reward": metadata['mean_reward'],
+                            "train/format_reward": metadata['mean_format_reward'],
+                            'train/std_reward':metadata['std_reward']
+                        },
+                        step=step,
+                    )
                 # 每 10 次更新验证一次，最后一次更新后也验证。
                 if step % 10 == 0 or step == rollout_steps:
-                    log_validation(step)
+                    final_reward = log_validation(step)
+                if step == rollout_steps:
+                    print(f'final validation reward is {final_reward}')
         finally:
             server.stop()
     return

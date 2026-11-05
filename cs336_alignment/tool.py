@@ -159,6 +159,8 @@ def aggregate_loss_across_microbatch_sequence(
 
     if loss_normalization == 'sequence':
         # 每条回答内部取平均
+        if token_count == 0:
+            return torch.tensor(0.0)
         sequence_loss = loss_sum / token_count                #N
         return sequence_loss.mean()
     else:

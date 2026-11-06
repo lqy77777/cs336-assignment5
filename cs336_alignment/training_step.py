@@ -251,7 +251,7 @@ def main():
     # 以下放在 main() 中，模型、数据、优化器等初始化完成之后。
     with wandb.init(
         project="cs336-grpo",
-        name=f"standard-on-policy-seed-{seed}-experiment-{1}",
+        name=f"standard-on-policy-seed-{seed}-experiment-{2}",
         config={
             "seed": seed,
             "n_eval": n_eval,
@@ -301,19 +301,19 @@ def main():
                 server.sync_policy_weights(model)    #同步权重
                 #1.采样 B 个questions
                 batch = rng.sample(training_data, B)
-                #2.每个question采样 G 个responses，生成3个输入list[str]
+                #2.先收集全部问题，再在循环外统一调用 vLLM
                 repeated_prompts = []
-                rollout_responses = []
                 repeated_ground_truths = []
+                prompts = []    #收集B个问题
                 for dictionary in batch:
                     question = dictionary['question']
                     prompt = zero_shot.format(question = question)
                     ground_truth = dictionary['ground_truth']
+                    prompts.append(prompt)
                     repeated_prompts += [prompt] * G
                     repeated_ground_truths += [ground_truth] * G
-                    completions = server.generate_completions([prompt],sampling_params)
-                    for response in completions:
-                        rollout_responses.append(response.text)
+                completions = server.generate_completions(prompts, sampling_params, batch_size = B)
+                rollout_responses = [response.text for response in completions]
                 batch_loss, metadata = grpo_train_step(
                     model,
                     tokenizer,

@@ -167,17 +167,17 @@ def main():
                         batch = rng.sample(training_data, B)
                         #2.每个question采样 G 个responses，生成3个输入list[str]
                         repeated_prompts = []
-                        rollout_responses = []
                         repeated_ground_truths = []
+                        prompts = []    #收集B个问题
                         for dictionary in batch:
                             question = dictionary['question']
                             prompt = zero_shot.format(question = question)
+                            prompts.append(prompt)
                             ground_truth = dictionary['ground_truth']
                             repeated_prompts += [prompt] * G
                             repeated_ground_truths += [ground_truth] * G
-                            completions = server.generate_completions([prompt],sampling_params)
-                            for response in completions:
-                                rollout_responses.append(response.text)
+                        completions = server.generate_completions(prompts, sampling_params, batch_size = B)
+                        rollout_responses = [response.text for response in completions]
                         batch_loss, metadata = grpo_train_step(
                             model,
                             tokenizer,

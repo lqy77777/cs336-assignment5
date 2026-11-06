@@ -1,0 +1,4 @@
+{"step": null, "phase": "initialization.model_load", "seconds": 10.308470375835896, "start_elapsed_seconds": 0.00043451040983200073, "status": "ok"}
+{"step": null, "phase": "initialization.wandb_init", "seconds": 2.9057139828801155, "start_elapsed_seconds": 10.332730554044247, "status": "ok"}
+{"step": null, "phase": "initialization.server_start", "seconds": 246.24470972642303, "start_elapsed_seconds": 13.24210399016738, "status": "error"}
+{"step": null, "phase": "shutdown.server_stop", "seconds": 1.2157877758145332, "start_elapsed_seconds": 259.4870844781399, "status": "ok"}

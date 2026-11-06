@@ -36,7 +36,7 @@ def main():
     gradient_accumulation_steps = 32   #一层更新分成几个microbatch
     m = N // gradient_accumulation_steps   #每个microbatch的大小
     max_grad_norm = 1.0
-    rollout_steps = 200
+    rollout_steps = 100
     n_eval = 1024   #验证集大小
     n_train = B * rollout_steps
 

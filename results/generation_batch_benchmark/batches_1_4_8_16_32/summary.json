@@ -1,0 +1,182 @@
+{
+  "metadata": {
+    "created_utc": "2026-11-06T03:17:44.167338+00:00",
+    "model": "allenai/OLMo-2-0425-1B",
+    "gpu": 1,
+    "port": 45707,
+    "gpu_memory_utilization": 0.9,
+    "sampling_parameters": {
+      "temperature": 1.0,
+      "max_tokens": 512,
+      "n": 8,
+      "seed": 0,
+      "stop": "</answer>",
+      "include_stop_str_in_output": true
+    },
+    "num_prompts": 32,
+    "batch_sizes": [
+      1,
+      4,
+      8,
+      16,
+      32
+    ],
+    "repeats": 3,
+    "measured_case_order": [
+      [
+        4,
+        8,
+        16,
+        32,
+        1
+      ],
+      [
+        32,
+        16,
+        4,
+        8,
+        1
+      ],
+      [
+        4,
+        8,
+        16,
+        32,
+        1
+      ]
+    ],
+    "prefix_cache_reset_before_each_case": true,
+    "source_sha256_before": {
+      "cs336_alignment/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "cs336_alignment/checkpoint.py": "4a91f6393df369bc3792e30e6a1d524dc0ecf9d9611419a0efc1e160cbe7d169",
+      "cs336_alignment/drgrpo_grader.py": "f88b29b0e76b3c28f969cb8b2f945e01b70aed2753306445d30822a192c54ec7",
+      "cs336_alignment/modal_utils.py": "5da352044a85019c3719a24e120de87b8830e282f19da042d59ca469a41904e1",
+      "cs336_alignment/modal_utils_safety.py": "369116fcbfd751655380007dfe22d62ba7ca304a2574d1d1f9bbcaf0c3b2312a",
+      "cs336_alignment/prompting_baselines.py": "a57dc5824863abcb4859d2812223004abe4d98d48ac6ed9b0c81f603651f9a43",
+      "cs336_alignment/test.py": "aadf23a3b91b89a83a39cf95110c07d2db4d854cba585f5db299d0d7879e1e6d",
+      "cs336_alignment/tool.py": "c8e8e2756a32af406643d90617f5e2dcb41421233475f478c3e86ebf6204bc4b",
+      "cs336_alignment/training_step.py": "c852736d9d8bb486c6847273b38e2225fe7fd4f1bc5cf1ae24f1073ad23e3192",
+      "cs336_alignment/tuning_grpo_varients.py": "7c23bd55219c97fcd00c24fe331e629a13762dfe082cbf98de7aa394d32c86e4",
+      "cs336_alignment/tuning_learning_rate.py": "5a9a2f733f37291941f6f00d2f8bb3cef73211e76f229cdb81217a3d2f5be96f",
+      "cs336_alignment/tuning_prompt_ablation.py": "0bf3a22ea186b29233aa2082e0a075069101ba0e25a772ce624276976a2caddd",
+      "cs336_alignment/vllm_utils.py": "d469b9142eb287d4b3748fac2e610b8414bd23dd149aec70fe9045912c96e02a",
+      "cs336_alignment/prompts/question_only.prompt": "bff41d4d354078f7c7adde76fabf70c086aa54a29fd4fb0e15a8f32b3ed27501",
+      "cs336_alignment/prompts/r1_zero.prompt": "56213732da87e12ace60a2b88a16df0af18280fb0563a957cbecc938a6a2ac0e",
+      "cs336_alignment/prompts/r1_zero_three_shot_gsm8k.prompt": "91788d4fb0e8d81ec17066dc122572f02a6d2ec3ed762174c7b70fcf5fdf6193"
+    },
+    "versions": {
+      "vllm": "0.19.1",
+      "torch": "2.10.0+cu129",
+      "transformers": "5.7.0"
+    },
+    "limitations": [
+      "Base model generation only; no training or weight synchronization.",
+      "Cases may generate different tokens despite a fixed seed; actual output lengths are recorded.",
+      "Throughput is end-to-end output tokens/s, not a pure kernel benchmark."
+    ],
+    "startup_seconds": 80.06283098831773,
+    "status": "completed",
+    "source_sha256_after": {
+      "cs336_alignment/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "cs336_alignment/checkpoint.py": "4a91f6393df369bc3792e30e6a1d524dc0ecf9d9611419a0efc1e160cbe7d169",
+      "cs336_alignment/drgrpo_grader.py": "f88b29b0e76b3c28f969cb8b2f945e01b70aed2753306445d30822a192c54ec7",
+      "cs336_alignment/modal_utils.py": "5da352044a85019c3719a24e120de87b8830e282f19da042d59ca469a41904e1",
+      "cs336_alignment/modal_utils_safety.py": "369116fcbfd751655380007dfe22d62ba7ca304a2574d1d1f9bbcaf0c3b2312a",
+      "cs336_alignment/prompting_baselines.py": "a57dc5824863abcb4859d2812223004abe4d98d48ac6ed9b0c81f603651f9a43",
+      "cs336_alignment/test.py": "aadf23a3b91b89a83a39cf95110c07d2db4d854cba585f5db299d0d7879e1e6d",
+      "cs336_alignment/tool.py": "c8e8e2756a32af406643d90617f5e2dcb41421233475f478c3e86ebf6204bc4b",
+      "cs336_alignment/training_step.py": "c852736d9d8bb486c6847273b38e2225fe7fd4f1bc5cf1ae24f1073ad23e3192",
+      "cs336_alignment/tuning_grpo_varients.py": "7c23bd55219c97fcd00c24fe331e629a13762dfe082cbf98de7aa394d32c86e4",
+      "cs336_alignment/tuning_learning_rate.py": "5a9a2f733f37291941f6f00d2f8bb3cef73211e76f229cdb81217a3d2f5be96f",
+      "cs336_alignment/tuning_prompt_ablation.py": "0bf3a22ea186b29233aa2082e0a075069101ba0e25a772ce624276976a2caddd",
+      "cs336_alignment/vllm_utils.py": "d469b9142eb287d4b3748fac2e610b8414bd23dd149aec70fe9045912c96e02a",
+      "cs336_alignment/prompts/question_only.prompt": "bff41d4d354078f7c7adde76fabf70c086aa54a29fd4fb0e15a8f32b3ed27501",
+      "cs336_alignment/prompts/r1_zero.prompt": "56213732da87e12ace60a2b88a16df0af18280fb0563a957cbecc938a6a2ac0e",
+      "cs336_alignment/prompts/r1_zero_three_shot_gsm8k.prompt": "91788d4fb0e8d81ec17066dc122572f02a6d2ec3ed762174c7b70fcf5fdf6193"
+    },
+    "source_files_unchanged": true,
+    "total_seconds": 255.8916699513793
+  },
+  "results": [
+    {
+      "batch_size": 1,
+      "candidates_per_http_batch": 8,
+      "http_requests_per_trial": 32,
+      "repeats": 3,
+      "mean_seconds": 21.936498704055946,
+      "median_seconds": 21.92712391167879,
+      "min_seconds": 21.909255675971508,
+      "max_seconds": 21.973116524517536,
+      "stdev_seconds": 0.032946426867579204,
+      "mean_output_tokens": 27884.333333333332,
+      "aggregate_output_tokens_per_second": 1271.1387404854022,
+      "length_finished_responses": 18,
+      "preemptions_total": 0.0,
+      "median_speedup_vs_batch_1": 1.0
+    },
+    {
+      "batch_size": 4,
+      "candidates_per_http_batch": 32,
+      "http_requests_per_trial": 8,
+      "repeats": 3,
+      "mean_seconds": 9.940380945801735,
+      "median_seconds": 10.03904576599598,
+      "min_seconds": 9.700931675732136,
+      "max_seconds": 10.08116539567709,
+      "stdev_seconds": 0.20843579467971987,
+      "mean_output_tokens": 28225,
+      "aggregate_output_tokens_per_second": 2839.428403588564,
+      "length_finished_responses": 20,
+      "preemptions_total": 0.0,
+      "median_speedup_vs_batch_1": 2.1841840771310985
+    },
+    {
+      "batch_size": 8,
+      "candidates_per_http_batch": 64,
+      "http_requests_per_trial": 4,
+      "repeats": 3,
+      "mean_seconds": 5.726736268649499,
+      "median_seconds": 5.699556086212397,
+      "min_seconds": 5.64337632805109,
+      "max_seconds": 5.837276391685009,
+      "stdev_seconds": 0.0997666297280561,
+      "mean_output_tokens": 28379.333333333332,
+      "aggregate_output_tokens_per_second": 4955.585869859842,
+      "length_finished_responses": 18,
+      "preemptions_total": 0.0,
+      "median_speedup_vs_batch_1": 3.847163459751182
+    },
+    {
+      "batch_size": 16,
+      "candidates_per_http_batch": 128,
+      "http_requests_per_trial": 2,
+      "repeats": 3,
+      "mean_seconds": 3.632679421454668,
+      "median_seconds": 3.637263860553503,
+      "min_seconds": 3.6185944601893425,
+      "max_seconds": 3.6421799436211586,
+      "stdev_seconds": 0.012443133390200123,
+      "mean_output_tokens": 28428.333333333332,
+      "aggregate_output_tokens_per_second": 7825.720366469747,
+      "length_finished_responses": 16,
+      "preemptions_total": 0.0,
+      "median_speedup_vs_batch_1": 6.028466658545365
+    },
+    {
+      "batch_size": 32,
+      "candidates_per_http_batch": 256,
+      "http_requests_per_trial": 1,
+      "repeats": 3,
+      "mean_seconds": 2.28035240372022,
+      "median_seconds": 2.2769795320928097,
+      "min_seconds": 2.2572497949004173,
+      "max_seconds": 2.306827884167433,
+      "stdev_seconds": 0.024960547492057943,
+      "mean_output_tokens": 29461.666666666668,
+      "aggregate_output_tokens_per_second": 12919.786704284048,
+      "length_finished_responses": 19,
+      "preemptions_total": 0.0,
+      "median_speedup_vs_batch_1": 9.629917003041836
+    }
+  ]
+}

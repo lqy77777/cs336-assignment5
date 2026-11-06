@@ -1,0 +1,32 @@
+{
+  "created_utc": "2026-11-06T02:58:16.045642+00:00",
+  "steps": 12,
+  "source_sha256_before": {
+    "cs336_alignment/training_step.py": "c852736d9d8bb486c6847273b38e2225fe7fd4f1bc5cf1ae24f1073ad23e3192",
+    "cs336_alignment/tool.py": "c8e8e2756a32af406643d90617f5e2dcb41421233475f478c3e86ebf6204bc4b",
+    "cs336_alignment/vllm_utils.py": "d469b9142eb287d4b3748fac2e610b8414bd23dd149aec70fe9045912c96e02a",
+    "cs336_alignment/checkpoint.py": "4a91f6393df369bc3792e30e6a1d524dc0ecf9d9611419a0efc1e160cbe7d169",
+    "cs336_alignment/tuning_prompt_ablation.py": "0bf3a22ea186b29233aa2082e0a075069101ba0e25a772ce624276976a2caddd"
+  },
+  "changes_in_memory_only": [
+    "rollout_steps",
+    "stage wrappers",
+    "W&B project/name/config labels"
+  ],
+  "loopback_proxy_bypass": true,
+  "limitations": [
+    "Synchronization perturbs overlap/timing.",
+    "Short run measures early training, not a replay of the finished run.",
+    "Original final-step validation is preserved (steps 0, 10, 12 for a 12-step run)."
+  ],
+  "wandb_run_id": "kkxv8fbf",
+  "wandb_run_dir": "/root/autodl-tmp/projects/cs336-assignment5/wandb/run-20261106_105828-kkxv8fbf/files",
+  "source_sha256_after": {
+    "cs336_alignment/training_step.py": "c852736d9d8bb486c6847273b38e2225fe7fd4f1bc5cf1ae24f1073ad23e3192",
+    "cs336_alignment/tool.py": "c8e8e2756a32af406643d90617f5e2dcb41421233475f478c3e86ebf6204bc4b",
+    "cs336_alignment/vllm_utils.py": "d469b9142eb287d4b3748fac2e610b8414bd23dd149aec70fe9045912c96e02a",
+    "cs336_alignment/checkpoint.py": "4a91f6393df369bc3792e30e6a1d524dc0ecf9d9611419a0efc1e160cbe7d169",
+    "cs336_alignment/tuning_prompt_ablation.py": "0bf3a22ea186b29233aa2082e0a075069101ba0e25a772ce624276976a2caddd"
+  },
+  "source_files_unchanged": true
+}

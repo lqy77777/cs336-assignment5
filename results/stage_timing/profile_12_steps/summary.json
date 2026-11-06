@@ -1,0 +1,23 @@
+{
+  "measurement": "Synchronized trainer stage wall time; generation includes HTTP/server time.",
+  "overlap_note": "train.total and validation.total INCLUDE their subphases; do not add them twice.",
+  "completed_steps": 0,
+  "step_means": {},
+  "outside_steps_phase_seconds": {
+    "initialization.model_load": 10.308470375835896,
+    "initialization.wandb_init": 2.9057139828801155,
+    "initialization.server_start": 246.24470972642303,
+    "shutdown.server_stop": 1.2157877758145332
+  },
+  "phase_calls_by_step": {
+    "None": {
+      "initialization.model_load": 1,
+      "initialization.wandb_init": 1,
+      "initialization.server_start": 1,
+      "shutdown.server_stop": 1
+    }
+  },
+  "status": "error",
+  "source_files_unchanged": true,
+  "total_runner_seconds": 264.0307323485613
+}

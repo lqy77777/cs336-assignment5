@@ -1,0 +1,98 @@
+{
+  "created_utc": "2026-11-06T03:17:44.167338+00:00",
+  "model": "allenai/OLMo-2-0425-1B",
+  "gpu": 1,
+  "port": 45707,
+  "gpu_memory_utilization": 0.9,
+  "sampling_parameters": {
+    "temperature": 1.0,
+    "max_tokens": 512,
+    "n": 8,
+    "seed": 0,
+    "stop": "</answer>",
+    "include_stop_str_in_output": true
+  },
+  "num_prompts": 32,
+  "batch_sizes": [
+    1,
+    4,
+    8,
+    16,
+    32
+  ],
+  "repeats": 3,
+  "measured_case_order": [
+    [
+      4,
+      8,
+      16,
+      32,
+      1
+    ],
+    [
+      32,
+      16,
+      4,
+      8,
+      1
+    ],
+    [
+      4,
+      8,
+      16,
+      32,
+      1
+    ]
+  ],
+  "prefix_cache_reset_before_each_case": true,
+  "source_sha256_before": {
+    "cs336_alignment/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "cs336_alignment/checkpoint.py": "4a91f6393df369bc3792e30e6a1d524dc0ecf9d9611419a0efc1e160cbe7d169",
+    "cs336_alignment/drgrpo_grader.py": "f88b29b0e76b3c28f969cb8b2f945e01b70aed2753306445d30822a192c54ec7",
+    "cs336_alignment/modal_utils.py": "5da352044a85019c3719a24e120de87b8830e282f19da042d59ca469a41904e1",
+    "cs336_alignment/modal_utils_safety.py": "369116fcbfd751655380007dfe22d62ba7ca304a2574d1d1f9bbcaf0c3b2312a",
+    "cs336_alignment/prompting_baselines.py": "a57dc5824863abcb4859d2812223004abe4d98d48ac6ed9b0c81f603651f9a43",
+    "cs336_alignment/test.py": "aadf23a3b91b89a83a39cf95110c07d2db4d854cba585f5db299d0d7879e1e6d",
+    "cs336_alignment/tool.py": "c8e8e2756a32af406643d90617f5e2dcb41421233475f478c3e86ebf6204bc4b",
+    "cs336_alignment/training_step.py": "c852736d9d8bb486c6847273b38e2225fe7fd4f1bc5cf1ae24f1073ad23e3192",
+    "cs336_alignment/tuning_grpo_varients.py": "7c23bd55219c97fcd00c24fe331e629a13762dfe082cbf98de7aa394d32c86e4",
+    "cs336_alignment/tuning_learning_rate.py": "5a9a2f733f37291941f6f00d2f8bb3cef73211e76f229cdb81217a3d2f5be96f",
+    "cs336_alignment/tuning_prompt_ablation.py": "0bf3a22ea186b29233aa2082e0a075069101ba0e25a772ce624276976a2caddd",
+    "cs336_alignment/vllm_utils.py": "d469b9142eb287d4b3748fac2e610b8414bd23dd149aec70fe9045912c96e02a",
+    "cs336_alignment/prompts/question_only.prompt": "bff41d4d354078f7c7adde76fabf70c086aa54a29fd4fb0e15a8f32b3ed27501",
+    "cs336_alignment/prompts/r1_zero.prompt": "56213732da87e12ace60a2b88a16df0af18280fb0563a957cbecc938a6a2ac0e",
+    "cs336_alignment/prompts/r1_zero_three_shot_gsm8k.prompt": "91788d4fb0e8d81ec17066dc122572f02a6d2ec3ed762174c7b70fcf5fdf6193"
+  },
+  "versions": {
+    "vllm": "0.19.1",
+    "torch": "2.10.0+cu129",
+    "transformers": "5.7.0"
+  },
+  "limitations": [
+    "Base model generation only; no training or weight synchronization.",
+    "Cases may generate different tokens despite a fixed seed; actual output lengths are recorded.",
+    "Throughput is end-to-end output tokens/s, not a pure kernel benchmark."
+  ],
+  "startup_seconds": 80.06283098831773,
+  "status": "completed",
+  "source_sha256_after": {
+    "cs336_alignment/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "cs336_alignment/checkpoint.py": "4a91f6393df369bc3792e30e6a1d524dc0ecf9d9611419a0efc1e160cbe7d169",
+    "cs336_alignment/drgrpo_grader.py": "f88b29b0e76b3c28f969cb8b2f945e01b70aed2753306445d30822a192c54ec7",
+    "cs336_alignment/modal_utils.py": "5da352044a85019c3719a24e120de87b8830e282f19da042d59ca469a41904e1",
+    "cs336_alignment/modal_utils_safety.py": "369116fcbfd751655380007dfe22d62ba7ca304a2574d1d1f9bbcaf0c3b2312a",
+    "cs336_alignment/prompting_baselines.py": "a57dc5824863abcb4859d2812223004abe4d98d48ac6ed9b0c81f603651f9a43",
+    "cs336_alignment/test.py": "aadf23a3b91b89a83a39cf95110c07d2db4d854cba585f5db299d0d7879e1e6d",
+    "cs336_alignment/tool.py": "c8e8e2756a32af406643d90617f5e2dcb41421233475f478c3e86ebf6204bc4b",
+    "cs336_alignment/training_step.py": "c852736d9d8bb486c6847273b38e2225fe7fd4f1bc5cf1ae24f1073ad23e3192",
+    "cs336_alignment/tuning_grpo_varients.py": "7c23bd55219c97fcd00c24fe331e629a13762dfe082cbf98de7aa394d32c86e4",
+    "cs336_alignment/tuning_learning_rate.py": "5a9a2f733f37291941f6f00d2f8bb3cef73211e76f229cdb81217a3d2f5be96f",
+    "cs336_alignment/tuning_prompt_ablation.py": "0bf3a22ea186b29233aa2082e0a075069101ba0e25a772ce624276976a2caddd",
+    "cs336_alignment/vllm_utils.py": "d469b9142eb287d4b3748fac2e610b8414bd23dd149aec70fe9045912c96e02a",
+    "cs336_alignment/prompts/question_only.prompt": "bff41d4d354078f7c7adde76fabf70c086aa54a29fd4fb0e15a8f32b3ed27501",
+    "cs336_alignment/prompts/r1_zero.prompt": "56213732da87e12ace60a2b88a16df0af18280fb0563a957cbecc938a6a2ac0e",
+    "cs336_alignment/prompts/r1_zero_three_shot_gsm8k.prompt": "91788d4fb0e8d81ec17066dc122572f02a6d2ec3ed762174c7b70fcf5fdf6193"
+  },
+  "source_files_unchanged": true,
+  "total_seconds": 255.8916699513793
+}

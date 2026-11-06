@@ -1,0 +1,162 @@
+[
+  {
+    "prompt_index": 0,
+    "dataset_row": 6917,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: The state of Virginia had 3.79 inches of rain in March, 4.5 inches of rain in April, 3.95 inches of rain in May, 3.09 inches of rain in June and 4.67 inches in July.  What is the average rainfall amount, in inches, in Virginia?\nAssistant: <think>"
+  },
+  {
+    "prompt_index": 1,
+    "dataset_row": 3155,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: A chocolate box contains 200 bars. Thomas and his 4 friends take 1/4 of the bars and decide to divide them equally between them. One of Thomas's friends doesn't like chocolate bars very much and returns 5 of his bars to the box. Later, his sister Piper comes home and takes 5 fewer bars than those taken in total by Thomas and his friends so she can also share with her friends. What's the total number of bars left in the box?\nAssistant: <think>"
+  },
+  {
+    "prompt_index": 2,
+    "dataset_row": 6209,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: Gilbert grows herbs in his yard to use in his cooking. At the beginning of the spring, he planted three basil bushes, a parsley plant, and two kinds of mint. Halfway through spring, one of the basil plants dropped seeds from a flower and made an extra basil plant grow. However, a rabbit came by the garden near the end of spring and ate all the mint. How many herb plants did Gilbert have when spring ended?\nAssistant: <think>"
+  },
+  {
+    "prompt_index": 3,
+    "dataset_row": 7292,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: Marta was about to start the school year and needed to buy the necessary textbooks. She managed to buy five on sale, for $10 each. She had to order two textbooks online, which cost her a total of $40, and three she bought directly from the bookstore for a total of three times the cost of the online ordered books. How much in total did Martha spend on textbooks?\nAssistant: <think>"
+  },
+  {
+    "prompt_index": 4,
+    "dataset_row": 3445,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: At the burger hut, you can buy a burger for $5, french fries for $3, and a soft drink for $3.  If you order a special burger meal, you get all 3 of these food items for $9.50. A kid’s burger is $3, a kid’s french fries are $2, and a kid's juice box is $2.  They also have a kids meal of all 3 kids' food items for $5. Mr. Parker buys 2 burger meals for his wife and himself.  He also buys 2 burger meals and 2 kid's meals for his 4 children.  How much money does Mr. Parker save by buying the 6 meals versus buying the individual food items?\nAssistant: <think>"
+  },
+  {
+    "prompt_index": 5,
+    "dataset_row": 331,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: A roadwork company is paving a newly constructed 16-mile road. They use a mixture of pitch and gravel to make the asphalt to pave the road. Each truckloads of asphalt uses two bags of gravel and five times as many bags of gravel as it does barrels of pitch to make. It takes three truckloads of asphalt to pave each mile of road. The company paved 4 miles of road on one day, then one mile less than double that on the second day. How many barrels of pitch will the company need to finish the remaining road on the third day?\nAssistant: <think>"
+  },
+  {
+    "prompt_index": 6,
+    "dataset_row": 2121,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: Nancy wanted to make peanut butter cookies for a family gathering, but her cousin is allergic to peanuts. She decided to make almond butter cookies instead. A jar of almond butter costs three times the amount that a jar of peanut butter does. It takes half a jar to make a batch of cookies. A jar of peanut butter costs $3. How many dollars more does it cost per batch to make almond butter cookies instead of peanut butter cookies?\nAssistant: <think>"
+  },
+  {
+    "prompt_index": 7,
+    "dataset_row": 4188,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: Barry goes to a shop to buy a shirt he'd been admiring for quite some time. He tells the attendant that it's his birthday so she decides to give him a 15% special discount. The price tag on the shirt says $80. How much is he supposed to pay now, considering the special discount?\nAssistant: <think>"
+  },
+  {
+    "prompt_index": 8,
+    "dataset_row": 3980,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: Several birds were sitting in the branches of a crape myrtle tree.  There were three times more cardinals than bluebirds, but half as many swallows as bluebirds. If there were 2 swallows, what is the total number of birds in the crape myrtle tree?\nAssistant: <think>"
+  },
+  {
+    "prompt_index": 9,
+    "dataset_row": 3317,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: There are 180 days in a school year.  A senior can skip their final exams if they miss 5% or less of the school year.  Hazel has missed 6 days of school due to illness.  How many more days can she miss and still not have to take her exams?\nAssistant: <think>"
+  },
+  {
+    "prompt_index": 10,
+    "dataset_row": 6420,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: Rich likes to take long walks through town.  First he walks 20 feet from his house to the sidewalk.  Then he walks 200 feet down the sidewalk to the end of the road.  Then he makes a left and walks double his total distance so far until he reaches the next intersection.  Then he walks half the total distance up to this point again to the end of his route, before turning around and walking the same path all the way back home.  How many feet did Rich walk?\nAssistant: <think>"
+  },
+  {
+    "prompt_index": 11,
+    "dataset_row": 6798,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: Lena played video games for 3.5 hours last weekend. Her brother played 17 minutes more than she did. How many minutes together did Lena and her brother play video games last weekend?\nAssistant: <think>"
+  },
+  {
+    "prompt_index": 12,
+    "dataset_row": 2484,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: There are 3 rows of people relaxing at the beach. The first row is made up of 24 people until 3 people get up to wade in the water. 5 people from the second row, which originally held 20 people, go to join them. The third row is made up of 18 people. How many people are left relaxing on the beach?\nAssistant: <think>"
+  },
+  {
+    "prompt_index": 13,
+    "dataset_row": 3904,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: Mary needs school supplies. She has 6 classes and needs 1 folder for each class. She also needs 3 pencils for each class. She decides that for every 6 pencils she should have 1 eraser. She also needs a set of paints for an art class.  Folders cost $6, pencils cost $2, and erasers cost $1. If she spends $80, how much did the set of paints cost in dollars?\nAssistant: <think>"
+  },
+  {
+    "prompt_index": 14,
+    "dataset_row": 2933,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: There are 235 books in a library. On Tuesday, 227 books are taken out. On Thursday, 56 books are brought back and 35 books are taken out again on Friday. How many books are there now?\nAssistant: <think>"
+  },
+  {
+    "prompt_index": 15,
+    "dataset_row": 4779,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: Melony makes $21 of profit every time she sells 3 shirts and four times as much profit when she sells two pairs of sandals. How much profit will she make if she sells 7 shirts and 3 pairs of sandals?\nAssistant: <think>"
+  },
+  {
+    "prompt_index": 16,
+    "dataset_row": 7304,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: Elmer has a pond that initially contained 2400 pollywogs, but these pollywogs matured into toads and left the pond at a constant rate of 50 pollywogs per day.  In addition, Elmer has a son named Melvin, who loves to catch pollywogs, remove them from the pond, and release them into a nearby stream.  For the first 20 days, Melvin caught 10 pollywogs per day and released them into the stream.  How many days did it take for all of the pollywogs to disappear from the pond?\nAssistant: <think>"
+  },
+  {
+    "prompt_index": 17,
+    "dataset_row": 7439,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: Of 96 oranges, half were ripe. If 1/4 of the ripe oranges were eaten and 1/8 of the unripe oranges were eaten, how many were left eaten in total?\nAssistant: <think>"
+  },
+  {
+    "prompt_index": 18,
+    "dataset_row": 1789,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: Padma is trading cards with Robert. Padma started with 75 cards and traded 2 or her valuable ones for 10 of Robert's cards. Robert started with 88 of his own cards and traded another 8 of his cards for 15 of Padma's cards. How many cards were traded between both Padma and Robert?\nAssistant: <think>"
+  },
+  {
+    "prompt_index": 19,
+    "dataset_row": 4134,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: Elliott drew a right-angle triangle on his book. It had a base of 4 inches, a height of 3 inches and a certain length of the hypotenuse. What was the length of the perimeter of the triangle that he drew?\nAssistant: <think>"
+  },
+  {
+    "prompt_index": 20,
+    "dataset_row": 1140,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: A basketball team played 40 games and won 70% of the games. It still had 10 games to play. How many games can they lose to win 60% of their games?\nAssistant: <think>"
+  },
+  {
+    "prompt_index": 21,
+    "dataset_row": 2308,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: Peggy fell off her bike and skinned her knees.  She needed two bandages on her left knee and three bandages on her right knee.  If the box of bandages had 8 less than two dozen bandages before Peggy skinned her knees, how many bandages were left in the box after Peggy finished putting bandages on her knees?\nAssistant: <think>"
+  },
+  {
+    "prompt_index": 22,
+    "dataset_row": 1144,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: Michael has two brothers. His oldest brother is 1 year older than twice Michael's age when Michael was a year younger. His younger brother is 5 years old, which is a third of the age of the older brother. What is their combined age?\nAssistant: <think>"
+  },
+  {
+    "prompt_index": 23,
+    "dataset_row": 6191,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: The stadium seats 60,000 fans, but only 75% of the seats were sold for the music show. Because of the threat of rain, 5,000 fans stayed home. How many attended the show?\nAssistant: <think>"
+  },
+  {
+    "prompt_index": 24,
+    "dataset_row": 776,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: Amber worked for 12 hours last weekend. Armand worked one-third as long and Ella worked twice as long. How many hours did the 3 people work in total?\nAssistant: <think>"
+  },
+  {
+    "prompt_index": 25,
+    "dataset_row": 5065,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: Angela wants to check her math homework answers with her friends, but some of them aren't done yet. Out of 20 problems, Martha has finished 2, Jenna has finished four times the number Martha did minus 2, and Mark has finished half the number Jenna did. If none of the friends worked on any of the same problems, how many problems have no one but Angela finished?\nAssistant: <think>"
+  },
+  {
+    "prompt_index": 26,
+    "dataset_row": 6548,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: Noah and Ava are planning a trip to the zoo.  Zoo entry tickets are $5 per person.  Bus fare is $1.50 per person one way.  If they bring $40 with them, how much money do they have left to spend on lunch and snacks?\nAssistant: <think>"
+  },
+  {
+    "prompt_index": 27,
+    "dataset_row": 2052,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: Jane had a 500 page book to read. The first half of the book Jane read with a speed of 10 pages per day, and the second half with a speed of 5 pages a day. How many days did Jane spend reading this book?\nAssistant: <think>"
+  },
+  {
+    "prompt_index": 28,
+    "dataset_row": 7452,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: Gwen received a $900 bonus at work and decided to invest this money in the stock market.  She spent one-third of her bonus on stock A, one-third on stock B, and the remaining one-third on stock C.   After one year, stock A and stock B had doubled in value, while stock C had lost half of its value.  At the end of the year, how much were Gwen's stocks worth, in dollars?\nAssistant: <think>"
+  },
+  {
+    "prompt_index": 29,
+    "dataset_row": 4362,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: Phillip is taking a math test and an English test on Monday. The math test has 40 questions and he gets 75% of them right. The English test has 50 questions and he gets 98% of them right. How many total questions does he get right?\nAssistant: <think>"
+  },
+  {
+    "prompt_index": 30,
+    "dataset_row": 5776,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: Tiffany is going to the beach and wants to make sure she has enough sunscreen. She knows she needs to re-apply sunscreen after 2 hours. She also knows she needs 3 ounces of sunscreen each application and a bottle contain 12 ounces and costs $3.5. If she is there for 16 hours, how much will the sunscreen cost?\nAssistant: <think>"
+  },
+  {
+    "prompt_index": 31,
+    "dataset_row": 6637,
+    "prompt": "A conversation between User and Assistant. The User asks a question, and the Assistant solves it. The Assistant first thinks about the reasoning process in the mind and then provides the User with the answer. The reasoning process is enclosed within <think> </think> and answer is enclosed within <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.\nUser: If eight liters is 20% the capacity of a container filled with water, calculate the total capacity of 40 such containers filled with water.\nAssistant: <think>"
+  }
+]

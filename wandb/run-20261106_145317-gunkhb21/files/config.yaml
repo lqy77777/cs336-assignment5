@@ -1,0 +1,81 @@
+_wandb:
+    value:
+        cli_version: 0.26.1
+        e:
+            r5g44rwpjtomp2x97y4wx8psuhlfo8sh:
+                cpu_count: 104
+                cpu_count_logical: 208
+                cudaVersion: "13.1"
+                disk:
+                    /:
+                        total: "32212254720"
+                        used: "22799474688"
+                email: 992657945@qq.com
+                executable: /root/autodl-tmp/projects/cs336-assignment5/.venv/bin/python
+                git:
+                    commit: 8733c39d320e6975ce075684e37c6ae27231a3c2
+                    remote: git@github.com:lqy77777/cs336-assignment5.git
+                gpu: NVIDIA RTX PRO 6000 Blackwell Server Edition
+                gpu_count: 2
+                gpu_nvidia:
+                    - architecture: Blackwell
+                      cudaCores: 24064
+                      memoryTotal: "102641958912"
+                      name: NVIDIA RTX PRO 6000 Blackwell Server Edition
+                      uuid: GPU-da7ae254-9e05-c6b9-1949-90bb3786a04d
+                    - architecture: Blackwell
+                      cudaCores: 24064
+                      memoryTotal: "102641958912"
+                      name: NVIDIA RTX PRO 6000 Blackwell Server Edition
+                      uuid: GPU-8efe67f9-3814-58cd-445e-e1e6fcb7330f
+                host: autodl-container-107v8z2102-96fcfbe9
+                memory:
+                    total: "1081796993024"
+                os: Linux-5.15.0-78-generic-x86_64-with-glibc2.35
+                program: -m cs336_alignment.tuning_grpo_varients
+                python: CPython 3.12.3
+                root: /root/autodl-tmp/projects/cs336-assignment5
+                startedAt: "2026-11-06T06:53:17.414973Z"
+                writerId: r5g44rwpjtomp2x97y4wx8psuhlfo8sh
+        m: []
+        python_version: 3.12.3
+        t:
+            "1":
+                - 1
+                - 5
+                - 11
+                - 41
+                - 49
+                - 53
+                - 71
+            "2":
+                - 1
+                - 5
+                - 11
+                - 41
+                - 49
+                - 53
+                - 71
+            "3":
+                - 2
+                - 13
+                - 16
+                - 61
+                - 62
+            "4": 3.12.3
+            "5": 0.26.1
+            "6": 5.7.0
+            "12": 0.26.1
+            "13": linux-x86_64
+learning_rate:
+    value: 1e-05
+microbatch_size:
+    value: 8
+n_eval:
+    value: 1024
+rollout_steps:
+    value: 100
+seed:
+    value: 0
+varient:
+    value: dr_grpo

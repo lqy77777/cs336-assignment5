@@ -3,6 +3,7 @@ Small vLLM helpers for server lifecycle, completion requests, and NCCL weight sy
 """
 
 import atexit
+import ctypes
 import json
 import logging
 import os
@@ -62,6 +63,22 @@ class VLLMServer:
 
     def stop(self) -> None:
         stop_server(self.process, timeout=self.shutdown_timeout)
+        self.process = None
+        group = self.weight_sync_group
+        if group is not None:
+            if group.available and not group.disabled:
+                # destroy() waits for peer ranks; the inference process is gone.
+                # vLLM's wrapper does not expose abort, so bind the NCCL API.
+                abort = group.nccl.lib.ncclCommAbort
+                abort.argtypes = [ctypes.c_void_p]
+                abort.restype = ctypes.c_int
+                with torch.cuda.device(group.device):
+                    group.nccl.NCCL_CHECK(abort(group.comm))
+                group.available = False
+                group.disabled = True
+            self.weight_sync_group = None
+        # Retain the exit callback if cleanup raises, so cleanup can be retried.
+        atexit.unregister(self.stop)
 
     def init_weight_sync(self, policy_device: str):
         self.weight_sync_group = init_weight_sync(self.base_url, policy_device)

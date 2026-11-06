@@ -1,0 +1,45 @@
+{
+  "os":  "Linux-5.15.0-78-generic-x86_64-with-glibc2.35",
+  "python":  "CPython 3.12.3",
+  "startedAt":  "2026-11-06T05:24:01.035799Z",
+  "program":  "-m cs336_alignment.tuning_grpo_varients",
+  "git":  {
+    "remote":  "git@github.com:lqy77777/cs336-assignment5.git",
+    "commit":  "8733c39d320e6975ce075684e37c6ae27231a3c2"
+  },
+  "email":  "992657945@qq.com",
+  "root":  "/root/autodl-tmp/projects/cs336-assignment5",
+  "host":  "autodl-container-107v8z2102-96fcfbe9",
+  "executable":  "/root/autodl-tmp/projects/cs336-assignment5/.venv/bin/python",
+  "cpu_count":  104,
+  "cpu_count_logical":  208,
+  "gpu":  "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+  "gpu_count":  2,
+  "disk":  {
+    "/":  {
+      "total":  "32212254720",
+      "used":  "22799175680"
+    }
+  },
+  "memory":  {
+    "total":  "1081796993024"
+  },
+  "gpu_nvidia":  [
+    {
+      "name":  "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "memoryTotal":  "102641958912",
+      "cudaCores":  24064,
+      "architecture":  "Blackwell",
+      "uuid":  "GPU-da7ae254-9e05-c6b9-1949-90bb3786a04d"
+    },
+    {
+      "name":  "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "memoryTotal":  "102641958912",
+      "cudaCores":  24064,
+      "architecture":  "Blackwell",
+      "uuid":  "GPU-8efe67f9-3814-58cd-445e-e1e6fcb7330f"
+    }
+  ],
+  "cudaVersion":  "13.1",
+  "writerId":  "xxm04mhj9clzjqnjbpey37zmv939km04"
+}

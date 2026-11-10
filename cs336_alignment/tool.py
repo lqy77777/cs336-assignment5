@@ -2,7 +2,7 @@ import torch
 from transformers import PreTrainedTokenizerBase,PreTrainedModel,modeling_outputs
 from transformers.modeling_outputs import CausalLMOutputWithPast
 from typing import Callable,Literal
-from einops import einsum, rearrange
+from einops import einsum, rearrange, repeat
 
 def tokenize_prompt_and_output(
     prompt_strs: list[str],
@@ -136,7 +136,37 @@ def compute_policy_gradient_loss_on_policy(
     """把每条回答的 reward 或 advantage，乘到这条回答每个 token 的 log probability 上，得到逐 token 的策略梯度 loss。"""
     metadata = {}
     advantages = rearrange(raw_rewards_or_advantages,'... -> (...)')    #转化为长度为N的向量
-    result = - einsum(advantages, policy_log_probs,'b,b t -> b t')  #负号不要漏了
+    if importance_reweighting_method == 'none':
+        ratio = policy_log_probs
+        result = - einsum(advantages, ratio,'n,n t -> n t')  #负号不要漏了
+    elif importance_reweighting_method == 'noclip':
+        ratio = torch.exp(policy_log_probs - old_log_probs)
+        result = - einsum(advantages, ratio,'n,n t -> n t')  #负号不要漏了
+    elif importance_reweighting_method == 'grpo':
+        ratio = torch.exp(policy_log_probs - old_log_probs)
+        unclipped_ratio = einsum(advantages, ratio,'n,n t -> n t')
+        clamped = torch.clamp(
+            ratio,
+            min = 1.0 - cliprange,
+            max = 1.0 + cliprange
+        )
+        clipped_ratio = einsum(advantages, clamped,'n,n t -> n t')
+        result = - torch.minimum(unclipped_ratio, clipped_ratio)
+    else:
+        # 只用有效回答 token 计算序列权重。
+        log_ratio = policy_log_probs - old_log_probs
+        mask = response_mask.to(dtype=log_ratio.dtype)
+        token_count = mask.sum(dim=-1, keepdim=True).clamp_min(1)
+        s = torch.exp((log_ratio * mask).sum(dim = -1, keepdim = True) / token_count)
+        clamped = torch.clamp(
+            s,
+            min = 1.0 - cliprange,
+            max = 1.0 + cliprange
+        )
+        unclipped_objective = einsum(advantages, s,'n,n t -> n t')
+        clipped_objective = einsum(advantages, clamped,'n,n t -> n t')
+        result = - torch.minimum(unclipped_objective, clipped_objective)
+        result = repeat(result, 'n 1 -> n s', s=policy_log_probs.shape[1])
     return result, metadata
     #result大小  N*(T-1)
 

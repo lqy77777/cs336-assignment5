@@ -3,7 +3,7 @@ from typing import Any
 from pathlib import Path
 import csv
 import json
-from vllm_utils import VLLMServer
+from cs336_alignment.vllm_utils import VLLMServer
 import time    #统计吞吐量
 def parse_mmlu_response(
     mmlu_example: dict[str,Any],

@@ -14,6 +14,7 @@ from cs336_alignment.tool import compute_group_normalized_rewards_grpo,compute_p
 from cs336_alignment.training_step import grpo_train_step
 
 from cs336_alignment.baseline_mmlu import parse_mmlu_response
+from cs336_alignment.baseline_gsm8k import parse_gsm8k_response
 
 def run_tokenize_prompt_and_output(
     prompt_strs: list[str],
@@ -433,7 +434,7 @@ def run_parse_gsm8k_response(
         str with the predicted numeric answer if the model output can be parsed into a prediction,
         else None.
     """
-    raise NotImplementedError
+    return parse_gsm8k_response(model_output)
 
 
 def run_compute_per_instance_dpo_loss(

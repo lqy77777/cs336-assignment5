@@ -13,6 +13,8 @@ from cs336_alignment.tool import aggregate_loss_across_microbatch_sequence
 from cs336_alignment.tool import compute_group_normalized_rewards_grpo,compute_policy_gradient_loss_on_policy
 from cs336_alignment.training_step import grpo_train_step
 
+from cs336_alignment.baseline_mmlu import parse_mmlu_response
+
 def run_tokenize_prompt_and_output(
     prompt_strs: list[str],
     output_strs: list[str],
@@ -414,7 +416,7 @@ def run_parse_mmlu_response(
         str (one of "A", "B", "C", or "D") if the model output can be parsed into a prediction,
         else None.
     """
-    raise NotImplementedError
+    return parse_mmlu_response(mmlu_example, model_output)
 
 
 def run_parse_gsm8k_response(

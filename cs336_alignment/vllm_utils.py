@@ -211,6 +211,7 @@ def generate_completions(
     completions = []
     for prompt_batch in prompt_batches:
         payload = {
+            "top_p": sampling_params.get("top_p", 1.0),
             "model": model_id,
             "prompt": prompt_batch,
             "temperature": sampling_params["temperature"],
